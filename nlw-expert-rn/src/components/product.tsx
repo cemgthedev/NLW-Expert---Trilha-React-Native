@@ -5,13 +5,14 @@ import { forwardRef } from "react";
 type ProductDataProps = {
     title: string,
     description: string,
-    thumbnail: ImageProps
+    thumbnail: ImageProps,
+    quantity?: number
 }
 
 type ProductProps = TouchableOpacityProps & {
     data: ProductDataProps
 }
-export const Product = forwardRef<TouchableOpacity, ProductProps>(({data: {title, description, thumbnail}, ...props}, ref) => {
+export const Product = forwardRef<TouchableOpacity, ProductProps>(({data: {title, description, thumbnail, quantity}, ...props}, ref) => {
     return (
         <TouchableOpacity 
             ref={ref}
@@ -21,9 +22,21 @@ export const Product = forwardRef<TouchableOpacity, ProductProps>(({data: {title
             <Image source={thumbnail} className="w-20 h-20 rounded-md"/>
 
             <View className="flex-1 ml-3">
-                <Text className="text-slate-100 font-subtitle text-base flex-1">
-                    {title}
-                </Text>
+                <View
+                    className="flex-row items-center"
+                >
+                    <Text className="text-slate-100 font-subtitle text-base flex-1">
+                        {title}
+                    </Text>
+
+                    {
+                        quantity &&
+                        <Text className="text-slate-400 font-subtitle text-sm">
+                            X {quantity}
+                        </Text>
+                    }
+                </View>
+
                 <Text className="text-slate-400 text-xs leading-5 mt-0.5">
                     {description}
                 </Text>
